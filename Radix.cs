@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace Sorting
 {
-    class Radix : Sort
+    class Radix : SortingMethod
     {
-        public Radix(int[] randomInts) : base(randomInts) { }
-
-        public void RadixSort()
+        public Radix(List<int> randomInts)
         {
-            SortedInts= Radix10LSDSort(new List<int>(SortedInts)).ToArray();
+            SetToSort(randomInts);
+            SortName = "Radix Sort";
+        }
+
+        public override void Sort()
+        {
+            StartTimer();
+            ToSort= Radix10LSDSort(new List<int>(ToSort));
+            StopTimer();
         }
         public static List<int> Radix10LSDSort(List<int> list)
         {

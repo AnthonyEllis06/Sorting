@@ -6,27 +6,31 @@ using System.Threading.Tasks;
 
 namespace Sorting
 {
-    class Insertion:Sort
+    class Insertion:SortingMethod
     {
-        public Insertion(int[] randomInts) : base(randomInts) { }
-
-        public void InsertionSort()
+        public Insertion(List<int> randomInts)
         {
-            InsertionSortS(SortedInts,0,N);
+            SetToSort(randomInts);
+            SortName = "Insertion Sort";
         }
 
-        public static void InsertionSortS(int[] NumArray, int start, int end)
+        public override void Sort()
+        {
+            InsertionSortS(ToSort,0,N);
+        }
+
+        public static void InsertionSortS(List<int> list, int start, int end)
         {
             int temp, j;
             for (int i = start; i <= end; i++)
             {
-                temp = NumArray[i];
-                for (j = i; j > start && temp < NumArray[j - 1]; j--)
+                temp = list[i];
+                for (j = i; j > start && temp < list[j - 1]; j--)
                 {
-                    NumArray[j] = NumArray[j - 1];
+                    list[j] =list[j - 1];
                 }
 
-                NumArray[j] = temp;
+                list[j] = temp;
             }
         }
     }

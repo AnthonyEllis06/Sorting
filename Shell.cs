@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace Sorting
 {
-    class Shell:Sort
+    class Shell:SortingMethod
     {
-        public Shell(int[] randomInts) : base(randomInts) { }
+        public Shell(List<int> randomInts)
+        {
+            SetToSort(randomInts);
+        }
 
+        public override void Sort()
+        {
+            StartTimer();
+            ShellSort();
+            StopTimer();
+        }
         public void ShellSort()
         {
             for (int gap = N / 2; gap > 0; gap = (gap == 2 ? 1 : (int) (gap / 2.2)))
@@ -17,13 +26,13 @@ namespace Sorting
                 int temp, j;
                 for (int i = gap; i < N; i++)
                 {
-                    temp = SortedInts[i];
-                    for (j = i; j >= gap && temp < SortedInts[j - gap]; j -= gap)
+                    temp = ToSort[i];
+                    for (j = i; j >= gap && temp < ToSort[j - gap]; j -= gap)
                     {
-                        SortedInts[j] = SortedInts[j - gap];
+                        ToSort[j] = ToSort[j - gap];
                     }
 
-                    SortedInts[j] = temp;
+                    ToSort[j] = temp;
                 }
             }
         }

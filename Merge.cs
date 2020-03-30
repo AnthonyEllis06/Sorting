@@ -6,17 +6,25 @@ using System.Threading.Tasks;
 
 namespace Sorting
 {
-    class Merge : Sort
+    class Merge : SortingMethod
     {
-        public Merge(int[] randomInts) : base(randomInts)
+        public Merge(List<int> randomInts)
         {
+            SetToSort(randomInts);
+            SortName = "Merge Sort";
         }
 
+        public override void Sort()
+        {
+            StartTimer();
+            MergeSort();
+            StopTimer();
+        }
         public void MergeSort()
         {
-            List<int> result = new List<int>(SortedInts);
+            List<int> result = new List<int>(ToSort);
             result = MergeSortRec(result);
-            SortedInts = result.ToArray();
+            ToSort = result;
         }
 
         private static List<int> MergeSortRec(List<int> Numbers)

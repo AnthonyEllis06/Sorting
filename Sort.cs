@@ -34,11 +34,11 @@ namespace Sorting
             NumSwaps = 0;
         }
 
-        public static void Swap(int[] NumArray,int indexOfA, int indexOfB)
+        public static void Swap(int[] list,int indexOfA, int indexOfB)
         {
-            int temp = NumArray[indexOfA];
-            NumArray[indexOfA] = NumArray[indexOfB];
-            NumArray[indexOfB] = temp;
+            int temp = list[indexOfA];
+            list[indexOfA] = list[indexOfB];
+            list[indexOfB] = temp;
         }
 
         public void MakeRandomInts()

@@ -6,20 +6,22 @@ using System.Threading.Tasks;
 
 namespace Sorting
 {
-    class Quick:Sort
+    class Quick:SortingMethod
     {
-        public Quick(int[] randomInts) : base(randomInts) { }
-
-        public void QuickSort()
+        public Quick(List<int> randomInts)
         {
-            SortedInts = RandomInts;
-            NumSwaps = 0;
-            QuickSortRec(SortedInts,0,N-1);
+            SetToSort(randomInts);
+            SortName = "Quick Sort";
+        }
+
+        public override void Sort()
+        {
+            QuickSortRec(ToSort,0,N-1);
         }
 
         
 
-        private void QuickSortRec(int[] NumArray, int start, int end)
+        private void QuickSortRec(List<int> list, int start, int end)
         {
             int left = start;
             int right = end;
@@ -27,79 +29,88 @@ namespace Sorting
                 return;
             while (left < right)
             {
-                while (NumArray[left] <= NumArray[right] && left < right)
+                while (list[left] <= list[right] && left < right)
                     right--;
                 if (left < right)
                 {
-                    Swap(NumArray, left, right);
-                    NumSwaps++;
+                    base.Swap(list, left, right);
                 }
-                while (NumArray[left] <= NumArray[right] && left < right)
+                while (list[left] <= list[right] && left < right)
                     left++;
                 if (left < right)
                 {
-                    Swap(NumArray, left, right);
+                    Swap(list, left, right);
                 }
             }
-            QuickSortRec(NumArray,start,left-1);
-            QuickSortRec(NumArray,right+1,end);
+            QuickSortRec(list,start,left-1);
+            QuickSortRec(list,right+1,end);
         }
-        public void QuickSortMedThree()
+
+
+    }
+
+    class QuickMedOf3 : SortingMethod
+    {
+        public QuickMedOf3(List<int> randomInts)
         {
-            SortedInts = RandomInts;
-            NumSwaps = 0;
-
+            ToSort = randomInts;
+            SortName = "Quick Sort(median of three)";
         }
 
-        private void QuickMedThree(int[] NumArray, int start, int end)
+        public override void Sort()
+        {
+            StartTimer();
+            QuickMedThree(ToSort,0,N);
+        }
+        private void QuickMedThree(List<int> list, int start, int end)
         {
             const int cutoff = 10;//point at which we switch to insertion sort.
             if (start + cutoff > end)
-                Insertion.InsertionSortS(NumArray, start, end);
+                Insertion.InsertionSortS(list, start, end);
             else
             {
                 int middle = (start + end) / 2;                     //find median of three for pivot
-                if (NumArray[middle] < NumArray[start])             //  by sorting them and pivot is
+                if (list[middle] < list[start])             //  by sorting them and pivot is
                 {                                                   //  in the middle position
-                    Swap(NumArray, start, middle);
+                    Swap(list, start, middle);
                     NumSwaps++;
                 }
 
-                if (NumArray[end] < NumArray[start])
+                if (list[end] < list[start])
                 {
-                    Swap(NumArray,start,end);
+                    Swap(list, start, end);
                     NumSwaps++;
                 }
 
-                if (NumArray[end] < NumArray[middle])
+                if (list[end] < list[middle])
                 {
-                    Swap(NumArray,middle,end);
+                    Swap(list, middle, end);
                     NumSwaps++;
                 }
                 //place pivot at position(end-1) since we know that array[end] >= array[middle]
-                int pivot = NumArray[middle];
-                Swap(NumArray,middle,end-1);
+                int pivot = list[middle];
+                Swap(list, middle, end - 1);
                 NumSwaps++;
                 //begin partitioning
                 int left, right;
-                for (left = start, right = end - 1;;)
+                for (left = start, right = end - 1; ;)
                 {
-                    while (NumArray[++left] < pivot)
+                    while (list[++left] < pivot)
                         ;
-                    while (pivot < NumArray[--right])
+                    while (pivot < list[--right])
                         ;
                     if (left < right)
                     {
-                        Swap(NumArray, left, right);
+                        Swap(list, left, right);
                         NumSwaps++;
                     }
                     else
                         break;
                 }
                 //restore pivot
-                Swap(NumArray,left,end-1);
-                QuickMedThree(NumArray,start,left-1);//recursively sort left subset
-                QuickMedThree(NumArray,left+1,end);//recursively sort right subset
+                Swap(list, left, end - 1);
+                QuickMedThree(list, start, left - 1);//recursively sort left subset
+                QuickMedThree(list, left + 1, end);//recursively sort right subset
             }
 
         }

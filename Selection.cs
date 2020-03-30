@@ -7,35 +7,39 @@ using System.Threading.Tasks;
 
 namespace Sorting
 {
-    class Selection:Sort
+    class Selection:SortingMethod
     {
-        public Selection(int[] randominInts) : base(randominInts) { }
-
-        public void SelectionSort()
+        public Selection(List<int> randominInts)
         {
-            SelectionSortRec(SortedInts, N);
+            ToSort = randominInts;
+            SortName = "Selection Sort";
         }
 
-        private void SelectionSortRec(int[] NumArray, int n)
+        public override void Sort()
+        {
+            SelectionSortRec(ToSort, N);
+        }
+
+        private void SelectionSortRec(List<int> list, int n)
         {
             if(n<=1)
                 return;
-            int max = Max(NumArray, n);
-            if (NumArray[max] != NumArray[n - 1])
+            int max = Max(list, n);
+            if (list[max] != list[n - 1])
             {
-                Swap(NumArray, max, n - 1);
+                Swap(list, max, n - 1);
                 NumSwaps++;
             }
                 
-            SelectionSortRec(NumArray,n-1);
+            SelectionSortRec(list,n-1);
         }
 
-        private int Max(int[] NumArray, int n)
+        private int Max(List<int> list, int n)
         {
             int max = 0;
             for (int i = 0; i < n; i++)
             {
-                if (NumArray[max] < NumArray[i])
+                if (list[max] < list[i])
                     max = i;
             }
 
